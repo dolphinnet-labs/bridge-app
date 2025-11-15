@@ -8,7 +8,7 @@ export default {
     transferTime: "3~10mins",
     userCancelledAuth: "User cancelled the authorization operation",
     approveTokenFailed: "Failed to approve token: ",
-    title: "Cross-chain anytime, anywhere, with ease",
+    title: "The Ocean of Interoperability",
     selIcon:"Select  Coin",
     selChain:"Select  Chain",
     Available: "Available",
@@ -90,7 +90,7 @@ export default {
         name1: 'DAPP Market',
         name2: 'LaunchPool',
         name3: "Staking",
-        name4: "CP Hashrate"
+        name4: "AquaLink Hashrate"
       }
     },
     meun3: {
@@ -138,14 +138,14 @@ export default {
   },
 
   "blockOne": {
-    "subTitle": "CP Chain High-Speed Modular Layer1 Blockchain",
+    "subTitle": "AquaLink High-Speed Modular Layer1 Blockchain",
     "transparentBTn": "Docs",
-    "whiteBtn": "Add CP Chain"
+    "whiteBtn": "Add AquaLink"
   },
   "blockTwo": {
-    "title": "What is CP Chain",
+    "title": "What is AquaLink",
     "subTitle": "High-Performance Modularity Layer1 Blockchain",
-    "intro": "CP Chain is a high-performance, modular EVM L1 blockchain developed by CP Labs, designed to bridge CeFi and DeFi with fast finality and cross-chain compatibility — powering next-gen digital assets and applications.",
+    "intro": "AquaLink is a high-performance, modular EVM L1 blockchain developed by Aqua Labs, designed to bridge CeFi and DeFi with fast finality and cross-chain compatibility — powering next-gen digital assets and applications.",
     "feature1Title": "100% EVM Compatible",
     "feature1Description": "Fully compatible with existing EVM tools and standards, enabling seamless contract deployment and migration.",
     "feature2Title": "Ultra-high throughput",
@@ -160,7 +160,7 @@ export default {
   },
   "blockThree": {
     "title": "A new era of Web3, built for builders",
-    "subTitle": "CP Chain is providing a unified, efficient and sustainable infrastructure for global developers, nodes and users. Through modular architecture, high-performance consensus and multi-layer incentive mechanism, it is building a next-generation Layer1 chain that truly supports large-scale application implementation and ecological win-win.",
+    "subTitle": "AquaLink is providing a unified, efficient and sustainable infrastructure for global developers, nodes and users. Through modular architecture, high-performance consensus and multi-layer incentive mechanism, it is building a next-generation Layer1 chain that truly supports large-scale application implementation and ecological win-win.",
     "feature1Title": "Developer-friendly",
     "feature1Description": "Modular design + full EVM compatibility, supports rapid deployment and large-scale application implementation.",
     "feature2Title": "High-performance base",
@@ -169,7 +169,7 @@ export default {
     "feature3Description": "Lightweight running nodes + multi-layer incentive mechanism, enabling global builders to participate stably.",
   },
   histroy: {
-    title: "CP Chain Roadmap",
+    title: "AquaLink Roadmap",
     blockOne: {
       title: "2025 Q3 - Q4",
       silde:"Infrastructure construction and ecological start-up",
@@ -193,16 +193,16 @@ export default {
       silde:"Global brands and disruptive applications",
       // 从网络到市场，释放真实价值
       name1: "Access to mainstream finance and derivatives",
-      name2: "Accelerate the implementation of CP Chain in the real industry ",
+      name2: "Accelerate the implementation of AquaLink in the real industry ",
       name3: "Launch a global community operation system  ",
       name4: "Achieve the upgrade of the deflation mechanism of core tokens",
     }
   },
   "blockFour": {
-    "title": "CP Chain Development Timeline",
+    "title": "AquaLink Development Timeline",
     "Q1": {
       "title": "Q1 2025",
-      "name1": "CP Chain Mainnet Launch",
+      "name1": "AquaLink Mainnet Launch",
       "name2": "Token Generation Event",
       "name3": "Airdrop and Centralized Exchange Listing",
       "name4": "Built for Speed, Designed for Impact",
@@ -211,13 +211,13 @@ export default {
     },
     "Q2": {
       "title": "Q2 2025",
-      "name1": "CP Chain Explorer Launch",
+      "name1": "AquaLink Explorer Launch",
       "name2": "Staking Mechanism Launch",
       "name3": "Liquidity Mining Launch"
     },
     "Q3": {
       "title": "Q3 2025",
-      "name1": "CP Chain Ecosystem Wallet Release",
+      "name1": "AquaLink Ecosystem Wallet Release",
       "name2": "Smart Contract Platform Open",
       "name3": "Cross-Chain Bridge Beta Version Launch"
     }
@@ -226,10 +226,10 @@ export default {
     "title": "Ecosystem Partners"
   },
   "blockSeven": {
-    "title": "CP Chain Global Events"
+    "title": "AquaLink Global Events"
   },
   footers: {
-    title: "Join CP Chain Empowering developers, users & validators",
+    title: "Join AquaLink Empowering developers, users & validators",
     contact: "Contact Us:",
     content1: {
       title: "Network",
@@ -276,7 +276,7 @@ export default {
     "sign_out": "sign out"
   },
   swap: {
-    title: "Swap on  CP Chain",
+    title: "Swap on AquaLink",
     sell: "Sell",
     buy: "Buy",
     balance: "Balance",

@@ -36,12 +36,12 @@
    
   
     {
-        "name": "cp chain",
+        "name": "AquaLink",
         "chainId": 86606,
         "img": "cp.svg",
-        "rpcUrl": "https://rpc-testnet.cpchain.com",
-        "explorerUrl": "https://explorer-testnet.cpchain.com",
-        "currency": "CP",
+        "rpcUrl": "https://rpc-testnet.aqualink.com",
+        "explorerUrl": "https://explorer-testnet.aqualink.com",
+        "currency": "AQUA",
         "nativeTokenContract": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "usdtContract": "0x6C255b22864bBC176431c42695D16f41576e5618",
       

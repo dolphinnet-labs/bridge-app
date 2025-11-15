@@ -401,8 +401,8 @@ export async function bridgeMethodOptimized({
   try {
     // 修改判断逻辑
     const shouldUseBridgeEthOptimized = 
-      (fromChainId === 86606 && tokenName === "CP") ||  // cp chain 上跨链 CP 币
-      (fromChainId !== 86606 && tokenName === "ETH")    // 除了 cp chain 以外的链跨链 ETH
+      (fromChainId === 86606 && tokenName === "AQUA") ||  // AquaLink 上跨链 AQUA 币
+      (fromChainId !== 86606 && tokenName === "ETH")    // 除了 AquaLink 以外的链跨链 ETH
     
     if (shouldUseBridgeEthOptimized) {
       return await bridgeEthOptimized({

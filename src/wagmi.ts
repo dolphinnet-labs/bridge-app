@@ -3,15 +3,15 @@ import { walletConnect, injected } from '@wagmi/vue/connectors'
 import { defineChain } from 'viem'
 
 // ✅ 1. 定义各链
-const cpChain = defineChain({
+const aquaLink = defineChain({
   id: 86606,
-  name: 'CPChain Testnet',
-  nativeCurrency: { name: 'CPChain', symbol: 'CP', decimals: 18 },
-  rpcUrls: { default: { http: ['https://rpc-testnet.cpchain.com'] } },
+  name: 'AquaLink Testnet',
+  nativeCurrency: { name: 'AquaLink', symbol: 'AQUA', decimals: 18 },
+  rpcUrls: { default: { http: ['https://rpc-testnet.aqualink.com'] } },
   blockExplorers: {
     default: {
-      name: 'CP Explorer',
-      url: 'https://explorer-testnet.cpchain.com',
+      name: 'AquaLink Explorer',
+      url: 'https://explorer-testnet.aqualink.com',
     },
   },
   testnet: true,
@@ -47,7 +47,7 @@ const optimism = defineChain({
 
 // ✅ 2. 构建 wagmi config
 export const config = createConfig({
-  chains: [cpChain, sepolia, optimism],
+  chains: [aquaLink, sepolia, optimism],
   connectors: [
     injected(), // ✅ 添加 injected 连接器支持 MetaMask 等浏览器钱包
     walletConnect({
@@ -56,7 +56,7 @@ export const config = createConfig({
   ],
   storage: createStorage({ storage: localStorage, key: 'vite-vue' }),
   transports: {
-    [cpChain.id]: http(cpChain.rpcUrls.default.http[0]),
+    [aquaLink.id]: http(aquaLink.rpcUrls.default.http[0]),
     [sepolia.id]: http(sepolia.rpcUrls.default.http[0]),
     [optimism.id]: http(optimism.rpcUrls.default.http[0])
   },

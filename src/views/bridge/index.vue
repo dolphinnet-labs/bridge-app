@@ -3,7 +3,8 @@
 
     <div class="swap-container" v-if="bridgeStep === 1">
       <h1>
-        {{ $t('bridge.title') }}
+        <span class="title-part1">The Ocean of</span>
+        <span class="title-part2">Interoperability</span>
       </h1>
       <div class="content">
         <div class="item">
@@ -107,7 +108,7 @@
     <div class="confirm-modal" v-if="bridgeStep === 2">
       <!-- 顶部标题与关闭 -->
       <div class="modal-header">
-        <el-icon style="color: #fff;cursor: pointer;" @click="tab(1)">
+        <el-icon style="color: #1a1a1a;cursor: pointer;" @click="tab(1)">
           <Back />
         </el-icon>
         <!-- <i class="el-icon-back" style="color: #fff;cursor: pointer;" @click="tab(1)"></i> -->
@@ -384,7 +385,7 @@ const coinList = [
   },
   {
     img: "cp.svg",
-    name: "CP",
+    name: "AQUA",
     minBridgeAmount: 0.1
   },
 
@@ -398,7 +399,7 @@ const TOKEN_DECIMALS = {
   USDC: 18,
   DAI: 18,
   WBTC: 8,
-  CP: 18
+  AQUA: 18
 };
 
 import { switchChain } from '@wagmi/core'
@@ -471,7 +472,7 @@ const allCoinList = ref([
   },
   {
     img: "cp.svg",
-    name: "CP",
+    name: "AQUA",
     minBridgeAmount: 0.1
   },
 
@@ -641,7 +642,7 @@ function sleep(ms) {
 // 接收实时推送 刷新列表
 async function Realtimerefresh() {
   // bridge-indexer-ws-testnet.cpchain.com/ws
-  ws = new WebSocket("wss://bridge-indexer-ws-testnet.cpchain.com/ws");
+  ws = new WebSocket("wss://bridge-indexer-ws-testnet.aqualink.com/ws");
 
   ws.onopen = function (evt) {
     console.log("Connection open ...");
@@ -843,27 +844,27 @@ watch(
 )
 
 async function getTokenBalance({ provider, address, chainInfo, tokenName }) {
-  const isCpChain = chainInfo.chainId === 86606;
+  const isAquaLink = chainInfo.chainId === 86606;
   const token = tokenName.toUpperCase();
   const nativeToken = chainInfo.currency.toUpperCase();
 
   try {
-    // ✅ 情况 1：原生币（如 ETH、CP），且不是 CP 链上的 ETH
-    if (token === nativeToken && !(isCpChain && token === 'ETH')) {
+    // ✅ 情况 1：原生币（如 ETH、AQUA），且不是 AquaLink 链上的 ETH
+    if (token === nativeToken && !(isAquaLink && token === 'ETH')) {
       const balance = await provider.getBalance(address);
       console.log(`[原生币] ${token} - 余额:`, balance.toString());
       return parseFloat(ethers.formatUnits(balance, 18)).toFixed(6);
     }
 
-    // ✅ 情况 2：CP链上的 ETH，走 ethContract 查询
-    if (isCpChain && token === 'ETH') {
+    // ✅ 情况 2：AquaLink链上的 ETH，走 ethContract 查询
+    if (isAquaLink && token === 'ETH') {
       console.log(chainInfo)
       const ethContract = chainInfo.ethContract;
       if (!ethContract) {
-        console.warn(`[警告] CP链未配置 ETH 合约地址`);
+        console.warn(`[警告] AquaLink链未配置 ETH 合约地址`);
         return '0.000000';
       }
-      console.log(`[CP链 ETH] 通过合约 ${ethContract} 查询`);
+      console.log(`[AquaLink链 ETH] 通过合约 ${ethContract} 查询`);
       const contract = new ethers.Contract(ethContract, erc20ABI, provider);
       const balance = await contract.balanceOf(address);
       return parseFloat(ethers.formatUnits(balance, 18)).toFixed(6);
@@ -1110,8 +1111,33 @@ function select2(val) {
 
   }
 
-  background: #121212 url("../../assets/faucet_bg.png") no-repeat;
-  background-size: 100% 100%;
+  background: linear-gradient(135deg, #F0F8FF 0%, #E0F2FE 30%, #B8E6FF 50%, #E0F2FE 70%, #F0F8FF 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(0, 183, 216, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(0, 119, 190, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 50% 50%, rgba(74, 158, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
   width: 100vw;
   overflow-x: hidden;
   min-height: 100vh;
@@ -1152,7 +1178,7 @@ function select2(val) {
 
   :deep(.el-pager li.is-active) {
     border-radius: 8px;
-    background: #00CE7A;
+    background: linear-gradient(135deg, #0077BE 0%, #00B4D8 100%);
     color: #1A1E1D;
     text-align: center;
 
@@ -1199,16 +1225,45 @@ function select2(val) {
     height: 550px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
 
     h1 {
       color: #FFF;
       text-align: center;
-
       font-size: 40px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
       margin-bottom: 32px;
+      font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      
+      .title-part1 {
+        font-size: 32px;
+        font-weight: 500;
+        background: linear-gradient(135deg, #0077BE 0%, #00B4D8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: #1E293B;
+      }
+      
+      .title-part2 {
+        font-size: 56px;
+        font-weight: 700;
+        font-family: 'Playfair Display', 'Cinzel', serif;
+        background: linear-gradient(135deg, #0077BE 0%, #00B4D8 50%, #4A9EFF 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 1px;
+        font-style: italic;
+        text-transform: capitalize;
+      }
     }
 
     .content {
@@ -1216,7 +1271,10 @@ function select2(val) {
       max-width: 480px;
       // height: 450px;
       border-radius: 24px;
-      background: #1E1E1E;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 119, 190, 0.08), 0 2px 8px rgba(0, 119, 190, 0.04);
+      border: 1px solid rgba(0, 119, 190, 0.1);
 
       .item {
         position: relative;
@@ -1227,8 +1285,9 @@ function select2(val) {
           cursor: pointer;
           width: 32px;
           height: 32px;
-          background: #1E1E1E;
-          border: 1.6px solid #2E2F32;
+          background: rgba(255, 255, 255, 0.9);
+          border: 1.6px solid rgba(0, 119, 190, 0.2);
+          box-shadow: 0 2px 8px rgba(0, 119, 190, 0.1);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -1245,7 +1304,7 @@ function select2(val) {
         }
 
         .arrow {
-          color: #00CE7A;
+          color: #0077BE;
           font-size: 14px;
           font-weight: 700;
           display: inline-block;
@@ -1271,14 +1330,22 @@ function select2(val) {
         .chain-card {
           cursor: pointer;
           // flex: 1 1 0%;
-          background: #1E1E1E;
+          background: rgba(255, 255, 255, 0.95);
           border-radius: 20px;
           padding: 16px;
           display: flex;
           align-items: center;
           gap: 8px;
           height: 72px;
-          border: 1px solid #2E2F32;
+          border: 1px solid rgba(0, 119, 190, 0.15);
+          box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
+          transition: all 0.3s ease;
+          
+          &:hover {
+            border-color: rgba(0, 119, 190, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 119, 190, 0.12);
+            transform: translateY(-2px);
+          }
           box-sizing: border-box;
           min-width: 0;
           transition: box-shadow 0.2s;
@@ -1309,7 +1376,7 @@ function select2(val) {
           }
 
           .label {
-            color: #8E8E92;
+            color: #64748B;
             // text-align: center;
 
             font-size: 14px;
@@ -1319,7 +1386,7 @@ function select2(val) {
           }
 
           .name {
-            color: var(---, #FFF);
+            color: #1E293B;
 
             font-size: 14px;
             font-style: normal;
@@ -1330,9 +1397,10 @@ function select2(val) {
       }
 
       .amount-card {
-        background: #1E1E1E;
-        border: 1px solid #2E2F32;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(0, 119, 190, 0.15);
         border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
@@ -1350,7 +1418,7 @@ function select2(val) {
           flex: 1;
 
           .amount-value {
-            color: #FFF;
+            color: #1E293B;
 
             font-size: 32px;
             font-style: normal;
@@ -1374,7 +1442,7 @@ function select2(val) {
               border: 0;
               outline: none;
               background: transparent;
-              color: #FFF;
+              color: #1E293B;
               width: 200px;
               // text-align: center;
               // font-family: "TT Hoves Pro Trial";
@@ -1386,7 +1454,7 @@ function select2(val) {
           }
 
           .amount-usd {
-            color: #FFF;
+            color: #1E293B;
 
             font-size: 12px;
             font-style: normal;
@@ -1411,8 +1479,10 @@ function select2(val) {
             border-radius: 100px;
             border: 1px solid #2E2F32;
 
-            background: #151517;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
+            border: 1px solid rgba(0, 119, 190, 0.15);
+            box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
             padding: 8px 12px;
             min-width: 72px;
             // height: 44px;
@@ -1431,7 +1501,7 @@ function select2(val) {
             }
 
             span {
-              color: #FFF;
+              color: #1E293B;
               text-align: center;
 
               font-size: 12px;
@@ -1451,7 +1521,7 @@ function select2(val) {
 
           .amount-avail {
 
-            color: #8E8E92;
+            color: #64748B;
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -1466,7 +1536,7 @@ function select2(val) {
             }
 
             span {
-              color: #FFF;
+              color: #1E293B;
 
               font-size: 12px;
               font-style: normal;
@@ -1478,9 +1548,10 @@ function select2(val) {
       }
 
       .summary-card {
-        background: #1E1E1E;
-        border: 1px solid #2E2F32;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(0, 119, 190, 0.15);
         border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
         padding: 16px;
         width: 100%;
         box-sizing: border-box;
@@ -1509,7 +1580,7 @@ function select2(val) {
             justify-content: center;
 
             .summary-amt {
-              color: #FFF;
+              color: #1E293B;
 
               font-size: 24px;
               font-style: normal;
@@ -1518,7 +1589,7 @@ function select2(val) {
             }
 
             .summary-usd {
-              color: #FFF;
+              color: #1E293B;
 
               font-size: 12px;
               font-style: normal;
@@ -1536,7 +1607,7 @@ function select2(val) {
 
           .summary-fee {
             display: flex;
-            color: #8E8E92;
+            color: #64748B;
 
             font-size: 12px;
             font-style: normal;
@@ -1544,7 +1615,7 @@ function select2(val) {
             line-height: normal;
 
             span {
-              color: #8E8E92;
+              color: #64748B;
             }
 
             ;
@@ -1556,7 +1627,7 @@ function select2(val) {
           }
 
           .summary-time {
-            color: #8E8E92;
+            color: #64748B;
 
             font-size: 12px;
             font-style: normal;
@@ -1579,8 +1650,9 @@ function select2(val) {
         height: 48px;
         border: none;
         outline: none;
-        background: #00CE7A;
+        background: linear-gradient(135deg, #0077BE 0%, #00B4D8 100%);
         border-radius: 999px;
+        box-shadow: 0 4px 16px rgba(0, 119, 190, 0.3);
         font-size: 16px;
         font-style: normal;
         font-weight: 500;
@@ -1591,13 +1663,26 @@ function select2(val) {
 
         &:hover,
         &:active {
-          background: #00c864;
-          filter: brightness(0.98);
+          background: linear-gradient(135deg, #005A8F 0%, #0096C7 100%);
+          box-shadow: 0 6px 20px rgba(0, 119, 190, 0.4);
+          transform: translateY(-1px);
         }
       }
 
       .submit-btn:disabled {
-        cursor: not-allowed
+        cursor: not-allowed;
+        background: rgba(148, 163, 184, 0.2) !important;
+        color: #94A3B8 !important;
+        box-shadow: none !important;
+        opacity: 0.7;
+        transform: none !important;
+        
+        &:hover,
+        &:active {
+          background: rgba(148, 163, 184, 0.2) !important;
+          box-shadow: none !important;
+          transform: none !important;
+        }
       }
 
     }
@@ -1609,7 +1694,7 @@ function select2(val) {
     padding: 0 120px;
 
     .records-title {
-      color: #FFF;
+      color: #1a1a1a;
 
       font-size: 24px;
       font-style: normal;
@@ -1641,7 +1726,7 @@ function select2(val) {
 
           td {
 
-            color: #fff;
+            color: #1E293B;
             font-size: 14px;
             font-style: normal;
             font-weight: 500;
@@ -1651,7 +1736,7 @@ function select2(val) {
               font-weight: 500;
 
               &.success {
-                color: #00CE7A;
+                color: #0077BE;
               }
 
               &.fail {
@@ -1663,12 +1748,12 @@ function select2(val) {
 
           .goScan:hover {
             cursor: pointer;
-            color: #00c864;
+            color: #005A8F;
           }
         }
 
         .alt {
-          background: #1E1E1E;
+          background: rgba(255, 255, 255, 0.5);
         }
 
 
@@ -1686,7 +1771,7 @@ function select2(val) {
       padding: 0 15px;
 
       .records-title {
-        color: #FFF;
+        color: #1a1a1a;
 
         font-size: 18px;
         font-style: normal;
@@ -1727,7 +1812,7 @@ function select2(val) {
             }
 
             .see {
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 12px;
               font-style: normal;
@@ -1736,7 +1821,7 @@ function select2(val) {
             }
 
             .sendName {
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 12px;
               font-style: normal;
@@ -1745,7 +1830,7 @@ function select2(val) {
             }
 
             .time {
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 12px;
               font-style: normal;
@@ -1754,7 +1839,7 @@ function select2(val) {
             }
 
             .receiveName {
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 12px;
               font-style: normal;
@@ -1763,7 +1848,7 @@ function select2(val) {
             }
 
             .statues {
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 12px;
               font-style: normal;
@@ -1776,7 +1861,7 @@ function select2(val) {
               font-size: 12px;
 
               &.success {
-                color: #00CE7A;
+                color: #0077BE;
               }
 
               &.fail {
@@ -1819,15 +1904,18 @@ function select2(val) {
 
   $text-main: #fff;
   $text-secondary: #8E8E92;
-  $primary: #00CE7A;
-  $primary-hover: #00c864;
+  $primary: #0077BE;
+  $primary-hover: #005A8F;
 
   .confirm-modal {
     max-width: 420px;
     width: calc(100% - 48px);
     // margin: 100px auto 0;
-    background: #151517;
+    background: rgba(255, 255, 255, 0.98);
     border-radius: $modal-radius;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 12px 40px rgba(0, 119, 190, 0.15), 0 4px 12px rgba(0, 119, 190, 0.08);
+    border: 1px solid rgba(0, 119, 190, 0.1);
     box-shadow: 0 12px 32px #000a;
     padding: 24px;
     //  display: flex;
@@ -1847,12 +1935,12 @@ function select2(val) {
         font-style: normal;
         font-weight: 500;
         line-height: normal;
-        color: #fff;
+        color: #1a1a1a;
       }
 
       .close-btn {
         font-size: 22px;
-        color: #fff;
+        color: #1a1a1a;
 
         cursor: pointer;
         transition: color .18s;
@@ -1864,9 +1952,10 @@ function select2(val) {
     }
 
     .modal-block {
-      background: #151517;
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
-      border: 1px solid #2E2F32;
+      border: 1px solid rgba(0, 119, 190, 0.15);
+      box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -1891,7 +1980,7 @@ function select2(val) {
           }
 
           .block-label {
-            color: #FFF;
+            color: #1E293B;
 
             font-size: 12px;
             font-style: normal;
@@ -1901,7 +1990,7 @@ function select2(val) {
         }
 
         .block-addr {
-          color: #FFF;
+          color: #1a1a1a;
           text-align: center;
 
           font-size: 12px;
@@ -1910,7 +1999,8 @@ function select2(val) {
           line-height: normal;
           border-radius: 100px;
 
-          background: #000;
+          background: rgba(0, 119, 190, 0.08);
+          border: 1px solid rgba(0, 119, 190, 0.15);
           display: inline-block;
           padding: 2px 10px;
         }
@@ -1927,15 +2017,15 @@ function select2(val) {
           height: 32px;
         }
 
-        .amount-value {
-          color: #FFF;
-          text-align: center;
+          .amount-value {
+            color: #1E293B;
+            text-align: center;
 
-          font-size: 24px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: normal;
-        }
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
       }
     }
 
@@ -1963,7 +2053,7 @@ function select2(val) {
         }
 
         .info-label {
-          color: #FFF;
+          color: #1a1a1a;
 
           font-size: 12px;
           font-style: normal;
@@ -1972,7 +2062,7 @@ function select2(val) {
         }
 
         .info-value {
-          color: #FFF;
+          color: #1a1a1a;
 
           font-size: 12px;
           font-style: normal;
@@ -2045,8 +2135,11 @@ function select2(val) {
     max-width: 390px;
     width: 100%;
     height: auto;
-    background: #151517;
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 16px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 119, 190, 0.15), 0 2px 8px rgba(0, 119, 190, 0.08);
+    border: 1px solid rgba(0, 119, 190, 0.1);
     padding: 24px;
     box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.35);
     animation: showModal .2s;
@@ -2062,17 +2155,17 @@ function select2(val) {
       justify-content: space-between;
       font-size: 20px;
       font-weight: bold;
-      color: #fff;
+      color: #1a1a1a;
       margin-bottom: 24px;
 
-      span {
-        color: #fff;
+        span {
+          color: #1a1a1a;
 
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
 
       // padding: 0 32px 8px 32px;
 
@@ -2083,7 +2176,7 @@ function select2(val) {
         transition: color 0.15s;
 
         &:hover {
-          color: #ccc;
+          color: #0077BE;
         }
       }
     }
@@ -2096,13 +2189,14 @@ function select2(val) {
         flex: 1;
         border: none;
         outline: none;
-        background: #252629;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 168, 255, 0.2);
         border-radius: 100px;
         height: 38px;
         padding: 0 14px;
         font-size: 15px;
 
-        color: #fff;
+        color: #1a1a1a;
 
         font-size: 14px;
         font-style: normal;
@@ -2110,8 +2204,7 @@ function select2(val) {
         line-height: normal;
 
         &::placeholder {
-          color: #666868;
-          ;
+          color: #94A3B8;
         }
       }
     }
@@ -2131,8 +2224,8 @@ function select2(val) {
         border-radius: 14px;
         padding: 0 16px;
         transition: background .13s;
-        color: #fff;
-        color: var(---, #FFF);
+        color: #1E293B;
+        color: #1E293B;
 
 
 
@@ -2149,13 +2242,13 @@ function select2(val) {
           font-size: 14px;
           font-style: normal;
           font-weight: 500;
-          color: #fff;
+          color: #1E293B;
           line-height: normal;
 
         }
 
         .check-mark {
-          color: #00e782;
+          color: #0077BE;
           font-size: 22px;
           font-weight: bold;
         }
@@ -2217,12 +2310,38 @@ function select2(val) {
       h1 {
         color: #FFF;
         text-align: center;
-
         font-size: 24px;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
         margin-bottom: 24px;
+        font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        
+          .title-part1 {
+          font-size: 20px;
+          font-weight: 500;
+          background: linear-gradient(135deg, #0077BE 0%, #00B4D8 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        .title-part2 {
+          font-size: 36px;
+          font-weight: 700;
+          font-family: 'Playfair Display', 'Cinzel', serif;
+          background: linear-gradient(135deg, #0077BE 0%, #00B4D8 50%, #4A9EFF 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          letter-spacing: 0.5px;
+          font-style: italic;
+          text-transform: capitalize;
+        }
       }
 
       .content {
@@ -2230,7 +2349,10 @@ function select2(val) {
         max-width: 480px;
         // height: 450px;
         border-radius: 24px;
-        background: #1E1E1E;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(0, 119, 190, 0.08), 0 2px 8px rgba(0, 119, 190, 0.04);
+        border: 1px solid rgba(0, 119, 190, 0.1);
 
         .item {
           position: relative;
@@ -2241,8 +2363,9 @@ function select2(val) {
             cursor: pointer;
             width: 32px;
             height: 32px;
-            background: #1E1E1E;
-            border: 1.6px solid #2E2F32;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.6px solid rgba(0, 119, 190, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 119, 190, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -2259,7 +2382,7 @@ function select2(val) {
           }
 
           .arrow {
-            color: #00CE7A;
+            color: #0077BE;
             font-size: 14px;
             font-weight: 700;
             display: inline-block;
@@ -2285,14 +2408,22 @@ function select2(val) {
           .chain-card {
             cursor: pointer;
             // flex: 1 1 0%;
-            background: #1E1E1E;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
             height: 72px;
-            border: 1px solid #2E2F32;
+            border: 1px solid rgba(0, 119, 190, 0.15);
+            box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
+            transition: all 0.3s ease;
+            
+            &:hover {
+              border-color: rgba(0, 119, 190, 0.3);
+              box-shadow: 0 4px 12px rgba(0, 119, 190, 0.12);
+              transform: translateY(-2px);
+            }
             box-sizing: border-box;
             min-width: 0;
             transition: box-shadow 0.2s;
@@ -2323,7 +2454,7 @@ function select2(val) {
             }
 
             .label {
-              color: #8E8E92;
+              color: #64748B;
               // text-align: center;
 
               font-size: 14px;
@@ -2333,7 +2464,7 @@ function select2(val) {
             }
 
             .name {
-              color: var(---, #FFF);
+              color: #1E293B;
 
               font-size: 12px;
               font-style: normal;
@@ -2344,9 +2475,10 @@ function select2(val) {
         }
 
         .amount-card {
-          background: #1E1E1E;
-          border: 1px solid #2E2F32;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(0, 119, 190, 0.15);
           border-radius: 20px;
+          box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
@@ -2364,7 +2496,7 @@ function select2(val) {
             flex: 1;
 
             .amount-value {
-              color: #FFF;
+              color: #1E293B;
 
               font-size: 32px;
               font-style: normal;
@@ -2388,7 +2520,7 @@ function select2(val) {
                 border: 0;
                 outline: none;
                 background: transparent;
-                color: #FFF;
+                color: #1E293B;
                 width: 100%;
                 // text-align: center;
                 // font-family: "TT Hoves Pro Trial";
@@ -2400,7 +2532,7 @@ function select2(val) {
             }
 
             .amount-usd {
-              color: #FFF;
+              color: #1E293B;
 
               font-size: 12px;
               font-style: normal;
@@ -2423,15 +2555,16 @@ function select2(val) {
               align-items: center;
               cursor: pointer;
               border-radius: 100px;
-              border: 1px solid #2E2F32;
+              border: 1px solid rgba(0, 119, 190, 0.15);
 
-              background: #151517;
+              background: rgba(255, 255, 255, 0.95);
               border-radius: 24px;
+              box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
               padding: 8px 12px;
               min-width: 72px;
               // height: 44px;
               font-size: 1.12rem;
-              color: #fff;
+              color: #1E293B;
               font-weight: 600;
               // margin-bottom: 30px;
               gap: 4px;
@@ -2445,7 +2578,7 @@ function select2(val) {
               }
 
               span {
-                color: #FFF;
+                color: #1E293B;
                 text-align: center;
 
                 font-size: 12px;
@@ -2465,7 +2598,7 @@ function select2(val) {
 
             .amount-avail {
 
-              color: #8E8E92;
+              color: #64748B;
               display: flex;
               align-items: center;
               justify-content: space-around;
@@ -2480,7 +2613,7 @@ function select2(val) {
               }
 
               span {
-                color: #FFF;
+                color: #1E293B;
 
                 font-size: 12px;
                 font-style: normal;
@@ -2492,9 +2625,10 @@ function select2(val) {
         }
 
         .summary-card {
-          background: #1E1E1E;
-          border: 1px solid #2E2F32;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(0, 119, 190, 0.15);
           border-radius: 20px;
+          box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
           padding: 16px;
           width: 100%;
           box-sizing: border-box;
@@ -2523,7 +2657,7 @@ function select2(val) {
               justify-content: center;
 
               .summary-amt {
-                color: #FFF;
+                color: #1E293B;
 
                 font-size: 16px;
                 font-style: normal;
@@ -2532,7 +2666,7 @@ function select2(val) {
               }
 
               .summary-usd {
-                color: #FFF;
+                color: #1E293B;
 
                 font-size: 12px;
                 font-style: normal;
@@ -2550,7 +2684,7 @@ function select2(val) {
 
             .summary-fee {
               display: flex;
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 11px;
               font-style: normal;
@@ -2558,7 +2692,7 @@ function select2(val) {
               line-height: normal;
 
               span {
-                color: #8E8E92;
+                color: #64748B;
               }
 
               ;
@@ -2570,7 +2704,7 @@ function select2(val) {
             }
 
             .summary-time {
-              color: #8E8E92;
+              color: #64748B;
 
               font-size: 11px;
               font-style: normal;
@@ -2593,8 +2727,9 @@ function select2(val) {
           height: 48px;
           border: none;
           outline: none;
-          background: #00CE7A;
+          background: linear-gradient(135deg, #0077BE 0%, #00B4D8 100%);
           border-radius: 999px;
+          box-shadow: 0 4px 16px rgba(0, 119, 190, 0.3);
           font-size: 16px;
           font-style: normal;
           font-weight: 500;
@@ -2605,13 +2740,26 @@ function select2(val) {
 
           &:hover,
           &:active {
-            background: #00c864;
-            filter: brightness(0.98);
+            background: linear-gradient(135deg, #005A8F 0%, #0096C7 100%);
+            box-shadow: 0 6px 20px rgba(0, 119, 190, 0.4);
+            transform: translateY(-1px);
           }
         }
 
         .submit-btn:disabled {
-          cursor: not-allowed
+          cursor: not-allowed;
+          background: rgba(148, 163, 184, 0.2) !important;
+          color: #94A3B8 !important;
+          box-shadow: none !important;
+          opacity: 0.7;
+          transform: none !important;
+          
+          &:hover,
+          &:active {
+            background: rgba(148, 163, 184, 0.2) !important;
+            box-shadow: none !important;
+            transform: none !important;
+          }
         }
 
       }

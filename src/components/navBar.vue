@@ -4,7 +4,7 @@
       <el-row>
         <el-col :xs="3" :sm="4" :md="5" :lg="9" :xl="11">
           <div class="gridContent">
-            <a href="/" class="flex"><img src="../assets/images/cpChain.png" alt="" /></a>
+            <a href="/" class="flex"><img src="../../AquaLink.png" alt="AquaLink" /></a>
           </div>
         </el-col>
         <el-col :xs="21" :sm="20" :md="19" :lg="15" :xl="13">
@@ -82,7 +82,7 @@
           </el-icon>
           <!-- <h3>{{ $t("link.titel") }}</h3> -->
           <div class="headerlogo">
-            <img src="./icons/logo.svg" alt="">
+            <img src="../../noword.png" alt="">
             <h4>{{ $t("link.titel") }}</h4>
           </div>
           <ul class="scroll-area">
@@ -102,7 +102,7 @@
           <span style="font-size: 20px;
 font-style: normal;
 font-weight: 500;
-line-height: normal;color: #fff;">{{ status }}</span>
+line-height: normal;color: #1a1a1a;">{{ status }}</span>
           <el-icon @click="showExit = false">
             <CloseBold />
           </el-icon>
@@ -123,7 +123,7 @@ line-height: normal;color: #fff;">{{ status }}</span>
 
               <div class="exit">
                 <div class="blances">
-                  {{ balance }}CP
+                  {{ balance }}AQUA
                 </div>
                 <button v-if="status !== 'disconnected'" @click="disconnectbtn()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
@@ -280,14 +280,14 @@ const menuList = computed(() => {
       itemList: [
         {
           name: t("navbar.meun1.menu.name1"),
-          path: "https://explorer.cpchain.com/",
+          path: "https://explorer.aqualink.com/",
           index: "1-1",
           acitved: true,
           type: "outLink",
         },
         {
           name: t("navbar.meun1.menu.name2"),
-          path: "https://explorer-testnet.cpchain.com/",
+          path: "https://explorer-testnet.aqualink.com/",
           index: "1-2",
           acitved: true,
           type: "outLink",
@@ -334,14 +334,14 @@ const menuList = computed(() => {
       itemList: [
         {
           name: t("navbar.meun3.menu.name1"),
-          path: "https://cpchain.gitbook.io/cpchaingitbook/",
+          path: "https://docs.aqualink.com/",
           index: "3-1",
           acitved: true,
           type: "outLink",
         },
         {
           name: t("navbar.meun3.menu.name2"),
-          path: "https://cpchain.gitbook.io/cpchaingitbook/user-guides/connecting-wallet-to-cp-chain",
+          path: "https://docs.aqualink.com/user-guides/connecting-wallet-to-aqualink",
           index: "3-2",
           acitved: true,
           type: "outLink",
@@ -412,7 +412,7 @@ watch(status, (newStatus) => {
     showConnet.value = false;
   }
 });
-const rpcUrl = 'https://rpc-testnet.cpchain.com'
+const rpcUrl = 'https://rpc-testnet.aqualink.com'
 
 // 使用 ethers 提供的 JSON RPC Provider
 const provider = new JsonRpcProvider(rpcUrl)
@@ -494,7 +494,7 @@ const newTop = ref();
 // 计算 header 的样式
 const headerStyle = ref({
   top: "0px", // Initial top position
-  backgroundColor: "rgba(18, 18, 18, 0)", // 初始透明背景色
+  backgroundColor: "rgba(255, 255, 255, 0)", // 初始透明背景色
   transition: "background-color 0.3s ease", // 只保留背景色过渡效果
 });
 
@@ -506,11 +506,11 @@ const handleScroll = () => {
 // 监听滚动位置变化，修改 header 样式
 watchEffect(() => {
   // 背景色透明度：超过 150px 时背景色变深至不透明
-  const opacity = scrollY.value > 70 ? 0.6 : scrollY.value / 70;
+  const opacity = scrollY.value > 70 ? 0.9 : scrollY.value / 70 * 0.9;
   const newTop = 0; // top 最大值为 30px
   // console.log(opacity)
   headerStyle.value = {
-    backgroundColor: `rgba(18, 18, 18, ${opacity})`,
+    backgroundColor: `rgba(255, 255, 255, ${opacity})`,
 
     transition: "top 0.3s ease,background-color 0.3s ease",
     top: `${newTop}px`, // 动态设置 top
@@ -626,8 +626,8 @@ const handleSelect = (index, indexPath) => {
   z-index: 100;
   width: 100%;
   height: 100vh;
-  color: #fff;
-  background: rgb(0, 0, 0, 0.8);
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -638,7 +638,10 @@ const handleSelect = (index, indexPath) => {
     // height: 400px;
     max-width: 500px;
     border-radius: 16px;
-    background: var(---, #151517);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 24px rgba(0, 119, 190, 0.12), 0 2px 8px rgba(0, 119, 190, 0.06);
+    border-bottom: 1px solid rgba(0, 119, 190, 0.1);
     padding: 24px;
     position: absolute;
     max-width: 360px;
@@ -671,7 +674,7 @@ const handleSelect = (index, indexPath) => {
       }
 
       h4 {
-        color: #FFF;
+        color: #1a1a1a;
 
         font-size: 20px;
         font-style: normal;
@@ -723,7 +726,9 @@ const handleSelect = (index, indexPath) => {
         justify-content: space-between;
         align-items: center;
         border-radius: 16px;
-        background: var(---, #1e1e1e);
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(0, 119, 190, 0.15);
+        box-shadow: 0 2px 8px rgba(0, 119, 190, 0.06);
         margin-bottom: 10px;
 
         img {
@@ -739,6 +744,7 @@ const handleSelect = (index, indexPath) => {
           font-style: normal;
           font-weight: 500;
           line-height: normal;
+          color: #1E293B;
           // margin-left: 30px;
         }
       }
@@ -760,7 +766,10 @@ const handleSelect = (index, indexPath) => {
     gap: 24px;
     position: relative;
     border-radius: 16px;
-    background: var(---, #151517);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 24px rgba(0, 119, 190, 0.12), 0 2px 8px rgba(0, 119, 190, 0.06);
+    border-bottom: 1px solid rgba(0, 119, 190, 0.1);
     cursor: pointer;
     position: absolute;
     animation: fadeIn 0.4s ease forwards;
@@ -816,18 +825,18 @@ const handleSelect = (index, indexPath) => {
           gap: 4px;
           flex: 1 0 0;
           border-radius: 100px;
-          background: var(---, #252629);
-          border: none;
+          background: rgba(0, 119, 190, 0.08);
+          border: 1px solid rgba(0, 119, 190, 0.25);
           outline: none;
           font-size: 14px;
           font-style: normal;
           font-weight: 500;
           line-height: normal;
-          color: #fff;
+          color: #1E293B;
         }
 
         .blances {
-          color: #8e8e92;
+          color: #666;
 
           font-size: 14px;
           font-style: normal;
@@ -878,7 +887,10 @@ const handleSelect = (index, indexPath) => {
       gap: 24px;
       position: relative;
       border-radius: 16px;
-      background: var(---, #151517);
+      background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 24px rgba(0, 119, 190, 0.12), 0 2px 8px rgba(0, 119, 190, 0.06);
+    border-bottom: 1px solid rgba(0, 119, 190, 0.1);
       cursor: pointer;
       animation: slide-up 0.3s ease;
       position: absolute;
@@ -987,7 +999,7 @@ a {
   }
 
   .content {
-    height: 72px;
+    height: 70px;
     width: auto;
     position: fixed;
     backdrop-filter: blur(10px);
@@ -1003,18 +1015,19 @@ a {
     // border-radius: 100px;
 
     .gridContent {
-      height: 72px;
+      height: 70px;
       display: flex;
       align-items: center;
       width: 100%;
 
       img {
-        height: 30px;
+        height: 60px;
+        object-fit: contain;
       }
     }
 
     .gridContent2 {
-      height: 72px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -1034,8 +1047,8 @@ a {
         align-items: center;
         gap: 10px;
         border-radius: 100px;
-        border: 1px solid #fff;
-        color: #fff;
+        border: 1px solid rgba(0, 119, 190, 0.3);
+        color: #1E293B;
         width: 130px;
 
         font-size: 14px;
@@ -1050,9 +1063,9 @@ a {
       button:hover {
         cursor: pointer;
 
-        border: 1px solid #00ce7a;
+        border: 1px solid #00A8FF;
 
-        color: #00ce7a;
+        color: #00A8FF;
       }
 
       .menu {
@@ -1075,12 +1088,24 @@ a {
 
   @media (max-width: 1000px) {
     .content {
-      height: 72px;
+      height: 73px;
       // width: calc(100% - 100px);
       // border-radius: 100px;
       // backdrop-filter: blur(14px);
       padding: 0 24px;
       // border-radius: 100px;
+      
+      .gridContent {
+        height: 73px;
+        
+        img {
+          height: 52px;
+        }
+      }
+      
+      .gridContent2 {
+        height: 73px;
+      }
     }
   }
 
@@ -1102,25 +1127,26 @@ a {
     }
 
     .content {
-      height: 48px;
+      height: 58px;
       width: calc(100% - 30px);
 
       backdrop-filter: blur(14px);
       // border-radius: 100px;
 
       .gridContent {
-        height: 48px;
+        height: 58px;
         display: flex;
         align-items: center;
         width: 100%;
 
         img {
-          height: 20px;
+          height: 44px;
+          object-fit: contain;
         }
       }
 
       .gridContent2 {
-        height: 48px;
+        height: 58px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -1140,8 +1166,8 @@ a {
           align-items: center;
           gap: 10px;
           border-radius: 100px;
-          border: 1px solid #fff;
-          color: #fff;
+          border: 1px solid rgba(0, 168, 255, 0.5);
+          color: #1E293B;
 
           font-size: 16px;
           font-weight: 500;
@@ -1172,8 +1198,8 @@ a {
             width: 100px;
             padding: 0 5px;
             border-radius: 100px;
-            border: 1px solid #fff;
-            color: #fff;
+            border: 1px solid rgba(0, 168, 255, 0.5);
+            color: #1E293B;
             font-family: "PingFang SC";
             font-size: 12px;
             font-weight: 500;
@@ -1183,13 +1209,13 @@ a {
           button:hover {
             cursor: pointer;
 
-            border: 1px solid #00ce7a;
+            border: 1px solid #0077BE;
 
-            color: #00ce7a;
+            color: #0077BE;
           }
 
           :deep(.el-icon:hover) {
-            color: #00ce7a;
+            color: #00A8FF;
           }
         }
       }
