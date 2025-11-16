@@ -719,6 +719,12 @@ const handleSelect = (index, indexPath) => {
       position: absolute;
       right: 20px;
       top: 20px;
+      color: #000000;
+      cursor: pointer;
+      
+      &:hover {
+        color: #0077BE;
+      }
     }
 
     .headerlogo {
@@ -959,6 +965,12 @@ const handleSelect = (index, indexPath) => {
         position: absolute;
         right: 20px;
         top: 20px;
+        color: #000000;
+        cursor: pointer;
+        
+        &:hover {
+          color: #0077BE;
+        }
       }
 
       :deep(.el-button) {
