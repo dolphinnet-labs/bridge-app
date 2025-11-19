@@ -2365,21 +2365,26 @@ function select2(val) {
 
     @keyframes showModal {
       from {
-        transform: translateY(100%) scale(0.92);
+        transform: translate(-50%, 100%) scale(0.92);
         opacity: 0;
       }
 
       to {
-        transform: translateY(0) scale(1);
+        transform: translate(-50%, 0) scale(1);
         opacity: 1;
       }
     }
 
     .chain-select-content {
-      position: absolute;
-      bottom: 0;
-      width: 90vw;
-      padding: 15px;
+      position: fixed;
+      left: 50%;
+      top: max(12vh, env(safe-area-inset-top) + 32px);
+      transform: translate(-50%, 0);
+      width: 92vw;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      animation: showModal 0.25s ease;
 
       .header {
         font-size: 18px;
